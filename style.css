@@ -7,7 +7,7 @@ a{text-decoration:none;color:inherit}button,a,input,select,textarea{-webkit-tap-
 .brand{display:flex;align-items:center;gap:8px;min-width:180px}.brand-logo{width:82px;height:60px;object-fit:contain}.brand-caption{display:flex;flex-direction:column;line-height:1.05}.brand-caption strong{font-size:23px;letter-spacing:-1px;color:#0a2442}.brand-caption small{font-size:9px;font-weight:700;letter-spacing:.2px;color:#66758a;margin-top:4px}
 .nav{display:flex;align-items:center;gap:25px}.nav a{font-size:13px;font-weight:700;color:#26344a;transition:.2s}.nav a:hover,.nav a.active{color:var(--blue2)}
 .header-actions{display:flex;gap:9px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:11px;padding:14px 19px;font:700 13px "DM Sans",sans-serif;cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-2px);filter:brightness(1.04)}.btn-primary{color:#fff;background:linear-gradient(110deg,#f59a2f,#df710b);box-shadow:0 8px 20px #ec851f35}.btn-outline{border:1px solid #d8e0eb;color:#18253a;background:#fff}.btn-small{padding:10px 13px;font-size:12px}.menu-toggle{display:none;border:0;background:none;font-size:25px;color:var(--ink)}
-.hero{min-height:535px;position:relative;display:flex;align-items:center;padding:55px 5.2%;color:#fff;background:#07182d url("https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=2000&q=85") center 48%/cover no-repeat;overflow:hidden}
+.hero{min-height:535px;position:relative;display:flex;align-items:center;padding:55px 5.2%;color:#fff;background:#07182d url("service-bench-handphone.jpg") center 48%/cover no-repeat;overflow:hidden}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,18,37,.98) 0%,rgba(5,18,37,.91) 34%,rgba(5,18,37,.50) 66%,rgba(5,18,37,.18) 100%)}
 .hero-content{position:relative;z-index:1;max-width:650px}.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 13px;border-radius:30px;background:#ffffff1c;border:1px solid #ffffff20;font-size:11px;font-weight:700;letter-spacing:.7px}.eyebrow i{width:7px;height:7px;border-radius:50%;background:#ffad4c;box-shadow:0 0 10px #ffad4c}
 .hero h1{font-size:clamp(39px,5vw,62px);line-height:1.02;letter-spacing:-2.7px;margin:21px 0 15px;font-weight:800}.hero h1 span{color:#ffb75f}.hero-content>p{font-size:16px;color:#d5dfed;max-width:510px;line-height:1.6}.hero-buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.btn-glass{border:1px solid #ffffffa6;color:#fff;background:#ffffff12;backdrop-filter:blur(8px)}
@@ -72,4 +72,35 @@ footer{background:#08172d;color:#d7e2f1;padding:48px 5% 22px;display:grid;grid-t
 }
 @media (max-width: 760px) {
   .qris-image { width: min(100%, 220px); max-height: 220px; }
+}
+
+
+/* Mobile layout hardening: responsive widths, touch targets and menu scrolling */
+img, video, canvas, svg { max-width: 100%; }
+.site-header, .site-header * { min-width: 0; }
+.nav { z-index: 30; }
+.menu-toggle { min-width: 44px; min-height: 44px; cursor: pointer; }
+.service-grid > *, .gallery-grid > *, .payment > *, .booking > *, footer > * { min-width: 0; }
+.address-card p, .location-wa, .footer-contact, .footer-map { overflow-wrap: anywhere; }
+.btn { min-height: 44px; }
+
+@media (max-width: 760px) {
+  .site-header { position: sticky; }
+  .nav { max-height: calc(100dvh - 67px); overflow-y: auto; }
+  .hero { background-position: 58% center; }
+  .service-grid, .payment, .booking, .location { min-width: 0; }
+  .booking-form { width: 100%; }
+  .booking-form input, .booking-form select, .booking-form textarea { min-width: 0; }
+  .qris-card { max-width: 100%; }
+  .location-photo.location-banner { width: 100%; height: auto; }
+  footer { overflow-wrap: anywhere; }
+}
+@media (max-width: 360px) {
+  .brand-logo { width: 54px; }
+  .brand-caption strong { font-size: 18px; }
+  .brand-caption small { font-size: 7px; }
+  .hero h1 { font-size: 34px; }
+  .section-wrap { width: 92%; }
+  .service-category { padding-left: 14px; padding-right: 14px; }
+  .gallery-info strong { font-size: 12px; }
 }
