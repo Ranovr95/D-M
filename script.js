@@ -1,43 +1,62 @@
+"use strict";
+
 const menuToggle = document.getElementById("menuToggle");
 const mainNav = document.getElementById("mainNav");
 
-menuToggle.addEventListener("click", () => {
-  const isOpen = mainNav.classList.toggle("open");
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
-  menuToggle.textContent = isOpen ? "×" : "☰";
-});
-
-mainNav.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
+if (menuToggle && mainNav) {
+  const closeMenu = () => {
     mainNav.classList.remove("open");
     menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "Buka navigasi");
     menuToggle.textContent = "☰";
-    mainNav.querySelectorAll("a").forEach((item) => item.classList.remove("active"));
-    link.classList.add("active");
+  };
+
+  menuToggle.addEventListener("click", () => {
+    const isOpen = mainNav.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute("aria-label", isOpen ? "Tutup navigasi" : "Buka navigasi");
+    menuToggle.textContent = isOpen ? "×" : "☰";
   });
-});
 
-document.getElementById("year").textContent = new Date().getFullYear();
+  mainNav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      closeMenu();
+      mainNav.querySelectorAll("a").forEach((item) => item.classList.remove("active"));
+      link.classList.add("active");
+    });
+  });
 
-document.getElementById("bookingForm").addEventListener("submit", (event) => {
-  event.preventDefault();
+  document.addEventListener("click", (event) => {
+    if (!mainNav.contains(event.target) && !menuToggle.contains(event.target)) closeMenu();
+  });
 
-  const formData = new FormData(event.currentTarget);
-  const name = String(formData.get("name")).trim();
-  const phone = String(formData.get("phone")).trim();
-  const device = String(formData.get("device")).trim();
-  const issue = String(formData.get("issue")).trim();
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 900) closeMenu();
+  });
+}
 
-  // Nomor WhatsApp resmi D&M (format internasional tanpa tanda +).
-  const adminWhatsApp = "6285282066731";
-  const message = [
-    "Halo D&M, saya ingin bertanya dan melakukan booking service.",
-    "",
-    `Nama: ${name}`,
-    `Nomor WhatsApp: ${phone}`,
-    `Jenis layanan: ${device}`,
-    `Keluhan: ${issue}`
-  ].join("\n");
+const year = document.getElementById("year");
+if (year) year.textContent = new Date().getFullYear();
 
-  window.open(`https://wa.me/${adminWhatsApp}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
-});
+const bookingForm = document.getElementById("bookingForm");
+if (bookingForm) {
+  bookingForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new FormData(bookingForm);
+    const name = String(formData.get("name") || "").trim();
+    const phone = String(formData.get("phone") || "").trim();
+    const device = String(formData.get("device") || "").trim();
+    const issue = String(formData.get("issue") || "").trim();
+    const adminWhatsApp = "6285282066731";
+    const message = [
+      "Halo D&M, saya ingin bertanya dan melakukan booking service.",
+      "",
+      `Nama: ${name}`,
+      `Nomor WhatsApp: ${phone}`,
+      `Jenis layanan: ${device}`,
+      `Keluhan: ${issue}`
+    ].join("\n");
+    const waUrl = `https://wa.me/${adminWhatsApp}?text=${encodeURIComponent(message)}`;
+    window.open(waUrl, "_blank", "noopener,noreferrer");
+  });
+}
